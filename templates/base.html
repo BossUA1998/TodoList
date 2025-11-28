@@ -9,24 +9,42 @@
       TodoList
     {% endblock %}
   </title>
-  <link rel="icon" href="{% static '#' %}">
+{#  <link rel="icon" href="{% static '#' %}">#}
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 
-{% block sidebar %}
-  {% include "includes/sidebar.html" %}
-{% endblock %}
+<div class="container-fluid">
+  <div class="row">
 
-{% block content %}
+    <nav class="col-md-3 col-lg-2 d-md-block sidebar-wrapper collapse show">
+      {% block sidebar %}
+        {% include "includes/sidebar.html" %}
+      {% endblock %}
+    </nav>
 
-{% endblock %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
 
-{% block pagination %}
-  {% include "includes/pagination.html" %}
-{% endblock %}
+      <div class="container">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      <div class="mt-4 d-flex justify-content-center">
+        {% block pagination %}
+          {% include "includes/pagination.html" %}
+        {% endblock %}
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

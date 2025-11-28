@@ -1,6 +1,12 @@
-<a href="{% url "deal:tasks" %}">
-  Home
-</a>
-<a href="{% url "deal:tags" %}">
-  Tags
-</a>
+<div class="sidebar-heading">
+  Menu
+</div>
+
+<div class="list-group list-group-flush px-2">
+  <a href="{% url "deal:tasks" %}" style="border-radius: 15px" class="list-group-item list-group-item-action sidebar-btn">
+    🏠 Home
+  </a>
+  <a href="{% url "deal:tags" %}" style="border-radius: 15px" class="list-group-item list-group-item-action sidebar-btn">
+    🏷️ Tags
+  </a>
+</div>
