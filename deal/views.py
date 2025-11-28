@@ -49,7 +49,7 @@ def update_task(request, pk):
 
 class TaskUpdateView(generic.UpdateView):
     model = Task
-    fields = ["content", "deadline", "tags"]
+    form_class = TaskForm
     success_url = reverse_lazy("deal:tasks")
 
 
