@@ -21,6 +21,12 @@ class TagsListView(generic.ListView):
     queryset = Tag.objects.all()
 
 
+class TagsCreateView(generic.CreateView):
+    model = Tag
+    fields = "__all__"
+    success_url = reverse_lazy("deal:tags")
+
+
 class TagsUpdateView(generic.UpdateView):
     model = Tag
     fields = "__all__"
