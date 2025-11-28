@@ -31,3 +31,8 @@ class TagsUpdateView(generic.UpdateView):
     model = Tag
     fields = "__all__"
     success_url = reverse_lazy("deal:tags")
+
+
+class TagsDeleteView(generic.DeleteView):
+    model = Tag
+    success_url = reverse_lazy("deal:tags")
