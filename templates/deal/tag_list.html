@@ -2,7 +2,7 @@
 
 {% block content %}
   <h1>Tags</h1>
-  <a href="{% url 'deal:task-create' %}">Create tag</a>
+  <a href="{% url 'deal:task-create' %}">Add</a>
   <table>
     <tr>
       <th>Name</th>
@@ -15,10 +15,14 @@
           {{ tag.name }}
         </td>
         <td>
-          Update ---
+          <a href="{% url 'deal:tags-update' pk=tag.pk %}">
+            Update
+          </a>
         </td>
         <td>
-          Delete ---
+          <a href="{% url 'deal:tags-delete' pk=tag.pk %}">
+            Delete
+          </a>
         </td>
       </tr>
     {% endfor %}

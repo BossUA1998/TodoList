@@ -1,6 +1,6 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 from .models import Tag, Task
 
@@ -16,9 +16,18 @@ class TaskCreateView(generic.CreateView):
     success_url = reverse_lazy("deal:tasks")
 
 
+def update_task(request, pk):
+    task = Task.objects.get(pk=pk)
+    if request.POST.get("complete"):
+        task.is_done = True
+    elif request.POST.get("undo"):
+        task.is_done = False
+    task.save()
+    return HttpResponseRedirect(reverse("deal:tasks"))
+
+
 class TagsListView(generic.ListView):
     model = Tag
-    queryset = Tag.objects.all()
 
 
 class TagsCreateView(generic.CreateView):

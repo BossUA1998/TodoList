@@ -5,14 +5,20 @@
   <a href="{% url 'deal:task-create' %}">Add task</a>
   {% for task in task_list %}
     <section>
-      <p>
-        {{ task.content }}
-        {% if task.is_done %}
-          Done
-        {% else %}
-          Not done
-        {% endif %}
-      </p>
+      {{ task.content }}
+      {% if task.is_done %}
+        Done
+        <form action="{% url 'deal:task-update' pk=task.pk %}" method="post">
+          {% csrf_token %}
+          <input type="submit" name="undo" value="Undo">
+        </form>
+      {% else %}
+        Not done
+        <form action="{% url 'deal:task-update' pk=task.pk %}" method="post">
+          {% csrf_token %}
+          <input type="submit" name="complete" value="Complete">
+        </form>
+      {% endif %}
       <p>Created: {{ task.created_at }}</p>
       <p>
         Tags:
