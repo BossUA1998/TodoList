@@ -1,9 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Hello from index</h1>
-<p>This a index page</p>
-{% for task in task_list %}
-  <p>Task: {{ task.content }}</p>
-{% endfor %}
+  <h1>TODO list</h1>
+  <a href="{% url 'deal:task-create' %}">Add task</a>
+  {% for task in task_list %}
+    <section>
+      <p>
+        {{ task.content }}
+        {% if task.is_done %}
+          Done
+        {% else %}
+          Not done
+        {% endif %}
+      </p>
+      <p>Created: {{ task.created_at }}</p>
+      <p>
+        Tags:
+        {% for tag in task.tags.all %}
+          {{ tag }},
+        {% endfor %}
+      </p>
+    </section>
+    <br>
+  {% endfor %}
 {% endblock %}

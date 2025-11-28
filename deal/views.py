@@ -7,6 +7,7 @@ from .models import Tag, Task
 
 class TaskListView(generic.ListView):
     model = Task
+    paginate_by = 5
 
 
 class TaskCreateView(generic.CreateView):
