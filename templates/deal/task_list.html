@@ -3,4 +3,7 @@
 {% block content %}
 <h1>Hello from index</h1>
 <p>This a index page</p>
+{% for task in task_list %}
+  <p>Task: {{ task.content }}</p>
+{% endfor %}
 {% endblock %}
