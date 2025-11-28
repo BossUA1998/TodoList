@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <form action="" method="post">
+    {{ form|crispy }}
+    <input type="submit" value="Create">
+  </form>
+{% endblock %}
