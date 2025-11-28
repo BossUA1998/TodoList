@@ -3,23 +3,31 @@
 {% block content %}
   <h1>TODO list</h1>
   <a href="{% url 'deal:task-create' %}">Add task</a>
+
   {% for task in task_list %}
+
     <section>
+      <a href="{% url 'deal:task-update' pk=task.pk %}">Update</a>
+      <a href="{% url 'deal:task-delete' pk=task.pk %}">Delete</a>
       {{ task.content }}
+
       {% if task.is_done %}
         Done
-        <form action="{% url 'deal:task-update' pk=task.pk %}" method="post">
+        <form action="{% url 'deal:task-update-complete' pk=task.pk %}" method="post">
           {% csrf_token %}
           <input type="submit" name="undo" value="Undo">
         </form>
+
       {% else %}
         Not done
-        <form action="{% url 'deal:task-update' pk=task.pk %}" method="post">
+        <form action="{% url 'deal:task-update-complete' pk=task.pk %}" method="post">
           {% csrf_token %}
           <input type="submit" name="complete" value="Complete">
         </form>
       {% endif %}
+
       <p>Created: {{ task.created_at }}</p>
+
       <p>
         Tags:
         {% for tag in task.tags.all %}

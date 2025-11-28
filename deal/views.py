@@ -26,6 +26,17 @@ def update_task(request, pk):
     return HttpResponseRedirect(reverse("deal:tasks"))
 
 
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    fields = ["content", "deadline", "tags"]
+    success_url = reverse_lazy("deal:tasks")
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("deal:tasks")
+
+
 class TagsListView(generic.ListView):
     model = Tag
 
