@@ -19,3 +19,9 @@ class TaskCreateView(generic.CreateView):
 class TagsListView(generic.ListView):
     model = Tag
     queryset = Tag.objects.all()
+
+
+class TagsUpdateView(generic.UpdateView):
+    model = Tag
+    fields = "__all__"
+    success_url = reverse_lazy("deal:tags")
