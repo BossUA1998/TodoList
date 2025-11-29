@@ -11,14 +11,10 @@ class TaskListView(generic.ListView):
     model = Task
     paginate_by = 5
 
-    def get_context_data(
-        self, *, object_list = ..., **kwargs
-    ):
+    def get_context_data(self, *, object_list=..., **kwargs):
         context = super().get_context_data(**kwargs)
         _content = self.request.GET.get("content")
-        context["search_form"] = TaskSearchForm(
-            initial={"content": _content}
-        )
+        context["search_form"] = TaskSearchForm(initial={"content": _content})
         return context
 
     def get_queryset(self):
@@ -37,14 +33,17 @@ class TaskCreateView(generic.CreateView):
     success_url = reverse_lazy("deal:tasks")
 
 
-def update_task(request, pk):
-    task = Task.objects.get(pk=pk)
-    if request.POST.get("complete"):
-        task.is_done = True
-    elif request.POST.get("undo"):
-        task.is_done = False
-    task.save()
-    return HttpResponseRedirect(reverse("deal:tasks"))
+class TaskCompleteView(generic.UpdateView):
+    model = Task
+    fields = ["is_done"]
+    success_url = reverse_lazy("deal:tasks")
+
+    def form_valid(self, form):
+        if self.request.POST.get("complete"):
+            form.instance.is_done = True
+        elif self.request.POST.get("undo"):
+            form.instance.is_done = False
+        return super().form_valid(form)
 
 
 class TaskUpdateView(generic.UpdateView):

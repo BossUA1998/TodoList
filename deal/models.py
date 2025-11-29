@@ -1,10 +1,12 @@
 from django.db import models
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=120)
 
     def __str__(self):
         return self.name
+
 
 class Task(models.Model):
     content = models.CharField(max_length=512)
@@ -14,4 +16,4 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag)
 
     class Meta:
-        ordering = ['is_done', "-created_at"]
+        ordering = ["is_done", "-created_at"]
