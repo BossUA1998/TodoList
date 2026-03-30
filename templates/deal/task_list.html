@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3">TODO list</h1>
+    <form action="" method="get" novalidate>
+      {{ search_form|crispy }}
+      <input type="submit" value="Search" class="btn btn-secondary btn-sm">
+    </form>
+    <a href="{% url 'deal:task-create' %}" class="btn btn-primary">
+      + Add task
+    </a>
+  </div>
+
+  {% for task in task_list %}
+    <div class="card task-card mb-3 {% if task.is_done %}task-done{% endif %}">
+      <div class="card-body">
+        <div class="row align-items-center">
+
+          <div class="col-md-8">
+            <h5 class="card-title task-content mb-1">
+              {{ task.content }}
+            </h5>
+
+            <div class="text-muted small mb-2">
+              Created: {{ task.created_at|date:"d M Y H:i" }}
+            </div>
+
+            <div class="tags">
+              {% for tag in task.tags.all %}
+                <span class="badge badge-info mr-1">{{ tag }}</span>
+              {% empty %}
+                <span class="text-muted small">No tags</span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="col-md-4 text-md-right mt-3 mt-md-0">
+            <div class="d-flex justify-content-end align-items-center">
+
+              {% if task.is_done %}
+                <form action="{% url 'deal:task-update-complete' pk=task.pk %}" method="post" class="mr-2">
+                  {% csrf_token %}
+                  <button type="submit" name="undo" value="undo" class="btn btn-sm btn-success">
+                    Undo
+                  </button>
+                </form>
+              {% else %}
+                <form action="{% url 'deal:task-update-complete' pk=task.pk %}" method="post" class="mr-2">
+                  {% csrf_token %}
+                  <button type="submit" name="complete" value="complete" class="btn btn-sm btn-outline-secondary">
+                    Complete
+                  </button>
+                </form>
+              {% endif %}
+
+              <div class="btn-group" role="group">
+                <a href="{% url 'deal:task-update' pk=task.pk %}" class="btn btn-sm btn-outline-info">
+                  Edit
+                </a>
+                <a href="{% url 'deal:task-delete' pk=task.pk %}" class="btn btn-sm btn-outline-danger">
+                  Delete
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="alert alert-secondary text-center">
+      No tasks found. Create one above!
+    </div>
+  {% endfor %}
+
+{% endblock %}
